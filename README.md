@@ -3,7 +3,7 @@
 This repository accompanies our paper on multi-camera vehicle tracking at an urban intersection (YOLOv4 detection, DeepSORT single-camera tracking, vehicle re-identification, and cross-camera association using global location, appearance and vehicle class). It provides:
 
 - a description of the four-camera dataset and its class distribution;
-- the manual labels of a 2-minute validation clip;
+- the manual labels of a 2-minute validation clip, as an example;
 - the code and results of the parameter study: a grid search and sensitivity analysis of the association weights and threshold.
 
 The videos themselves are not included (see [Data availability](#data-availability)).
@@ -26,7 +26,6 @@ The videos themselves are not included (see [Data availability](#data-availabili
 
 **Annotation protocol.** All annotations were made manually by one of the authors:
 - the vehicle count and the class of each vehicle (each vehicle counted once, even if it appeared in several cameras);
-- the identity matches (IDTP, IDFP and IDFN) used in the paper to evaluate multi-camera tracking, counted from the output videos of each method;
 - the labels of the 2-minute validation clip described below.
 
 ## Data availability
@@ -35,7 +34,7 @@ The videos were collected within a U.S. Department of Energy (DOE) project and a
 
 ## Validation clip labels (`data/validation_clip/`)
 
-The clip is the first 2 minutes of the four cameras (tracks frames 1 to 1800; the video frame index is frame − 1). The tracker's single-camera tracks were cut into segments wherever a track had no row for 8 frames or more. Each segment has a key `uid_firstframe`: for example, `25_16` is track 25 from frame 16. The window contains 286 segments. The annotator did not see the association results and answered two kinds of question:
+The clip, provided as an example, is the first 2 minutes of the four cameras (tracks frames 1 to 1800; the video frame index is frame − 1). The tracker's single-camera tracks were cut into segments wherever a track had no row for 8 frames or more. Each segment has a key `uid_firstframe`: for example, `25_16` is track 25 from frame 16. The window contains 286 segments. The annotator did not see the association results and answered two kinds of question:
 
 - 241 **match questions**: for a segment Q, which of the segments of a neighbouring camera that the tracker compared with Q, if any, shows the same vehicle;
 - 56 **gap checks**: whether the vehicle before and after a gap in one track is the same.
@@ -69,11 +68,6 @@ python code/figure.py         # results/fig_sensitivity.png and .pdf
 ```
 
 `code/compare.py` gives a bootstrap interval for the IDF1 difference between two settings.
-
-**Main results** (`results/`):
-- The best IDF1, 92.13%, is reached by 10 settings (λl from 0.55 to 0.95, Tdis from 0.70 to 0.85). The setting used in the paper reaches 92.07%.
-- At Tdis = 0.82, IDF1 stays within 1 point of the best for 36% of the weight combinations, including every combination with λl ≥ 0.55.
-- The threshold has the largest effect.
 
 ## License
 
